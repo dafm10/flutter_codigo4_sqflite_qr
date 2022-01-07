@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo4_sqflite_qr/pages/scanner_qr_page.dart';
 import 'package:flutter_codigo4_sqflite_qr/ui/general/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -179,7 +180,9 @@ class _ListCardPageState extends State<ListCardPage> {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ScannerQRPage()));
+                },
                 icon: Icon(Icons.qr_code_scanner),
                 label: Text(
                   "Escanear QR",

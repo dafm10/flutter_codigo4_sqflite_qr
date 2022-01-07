@@ -65,8 +65,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12.0),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black12.withOpacity(0.05),
@@ -82,6 +80,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           hintStyle: TextStyle(
                             color: COLOR_FONT_PRIMARY.withOpacity(0.3),
                           ),
+                          filled: true,
+                          fillColor: Colors.white,
+                          errorStyle: TextStyle(
+                            fontSize: 15.0,
+                            color: Color(0xffF45E29),
+                          ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
                             borderSide: BorderSide.none,
@@ -90,9 +94,22 @@ class _RegisterPageState extends State<RegisterPage> {
                             borderRadius: BorderRadius.circular(12.0),
                             borderSide: BorderSide.none,
                           ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: BorderSide.none,
+                          ),
                         ),
                         // atributo del TextFormField
-                        validator: (String? value) {},
+                        validator: (String? value) {
+                          if(value!.isEmpty){
+                            return "El campo no deb estar vacío";
+                          }
+                          return null;
+                        },
                       ),
                     ),
                     SizedBox(
@@ -111,12 +128,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12.0),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black12.withOpacity(0.05),
-                            blurRadius: 12.0,
+                            color: Colors.black12.withOpacity(0.04),
+                            blurRadius: 10.0,
                             offset: Offset(4, 4),
                           ),
                         ],
@@ -135,8 +150,13 @@ class _RegisterPageState extends State<RegisterPage> {
                           hintStyle: TextStyle(
                             color: COLOR_FONT_PRIMARY.withOpacity(0.3),
                           ),
-                          counterText:
-                              "", // para quitar el contador de caracteres
+                          filled: true,
+                          fillColor: Colors.white,
+                          counterText: "", // para quitar el contador de caracteres
+                          errorStyle: TextStyle(
+                            fontSize: 15.0,
+                            color: Color(0xffF45E29),
+                          ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
                             borderSide: BorderSide.none,
@@ -145,11 +165,22 @@ class _RegisterPageState extends State<RegisterPage> {
                             borderRadius: BorderRadius.circular(12.0),
                             borderSide: BorderSide.none,
                           ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: BorderSide.none,
+                          ),
                         ),
                         // atributo del TextFormField
                         validator: (String? value){
                           if(value!.isEmpty){
                             return "El campo no puede estar vación";
+                          }
+                          if(value.length < 8){
+                            return "Ingrese como mínimo 8 caracteres";
                           }
                           return null;
                         },
@@ -174,6 +205,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 onPressed: () {
+                  // se ejecuta esto siempre y cuando la validación sea correcta
                   if(_keyForm.currentState!.validate()){
 
                   }
