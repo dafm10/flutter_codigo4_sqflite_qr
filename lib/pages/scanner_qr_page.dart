@@ -78,9 +78,15 @@ class _ScannerQRPageState extends State<ScannerQRPage> {
     return Scaffold(
       body: Column(
         children: [
-          Expanded(flex: 4, child: _buildQrView(context)),
+          Expanded(
+            flex: 4,
+            child: _buildQrView(context),
+          ),
         ],
       ),
     );
   }
 }
+
+// web de pub.dev
+// https://pub.dev/packages/qr_code_scanner/example
