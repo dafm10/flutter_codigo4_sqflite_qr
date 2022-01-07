@@ -11,7 +11,6 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-
   // para identificar de forma global el formulario usado dentro del padding
   final _keyForm = GlobalKey<FormState>();
 
@@ -48,6 +47,7 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Form(
+                // añadirmos el key para identificar el formulario
                 key: _keyForm,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,24 +71,28 @@ class _RegisterPageState extends State<RegisterPage> {
                           BoxShadow(
                             color: Colors.black12.withOpacity(0.05),
                             blurRadius: 12.0,
-                            offset: Offset(4,4),
+                            offset: Offset(4, 4),
                           ),
                         ],
                       ),
-                      child: TextField(
+                      // cambiamos los TextField por TextFormField
+                      child: TextFormField(
                         decoration: InputDecoration(
-                            hintText: "Nombre Completo",
-                            hintStyle: TextStyle(
-                              color: COLOR_FONT_PRIMARY.withOpacity(0.3),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                              borderSide: BorderSide.none,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                              borderSide: BorderSide.none,
-                            )),
+                          hintText: "Nombre Completo",
+                          hintStyle: TextStyle(
+                            color: COLOR_FONT_PRIMARY.withOpacity(0.3),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: BorderSide.none,
+                          ),
+                        ),
+                        // atributo del TextFormField
+                        validator: (String? value) {},
                       ),
                     ),
                     SizedBox(
@@ -113,11 +117,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           BoxShadow(
                             color: Colors.black12.withOpacity(0.05),
                             blurRadius: 12.0,
-                            offset: Offset(4,4),
+                            offset: Offset(4, 4),
                           ),
                         ],
                       ),
-                      child: TextField(
+                      child: TextFormField(
                         // para habilitar solo teclado de numeros
                         keyboardType: TextInputType.number,
                         maxLength: 8, // el maximo de caracteres
@@ -127,19 +131,28 @@ class _RegisterPageState extends State<RegisterPage> {
                           FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                         ],
                         decoration: InputDecoration(
-                            hintText: "Número de DNI",
-                            hintStyle: TextStyle(
-                              color: COLOR_FONT_PRIMARY.withOpacity(0.3),
-                            ),
-                            counterText: "", // para quitar el contador de caracteres
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                              borderSide: BorderSide.none,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                              borderSide: BorderSide.none,
-                            )),
+                          hintText: "Número de DNI",
+                          hintStyle: TextStyle(
+                            color: COLOR_FONT_PRIMARY.withOpacity(0.3),
+                          ),
+                          counterText:
+                              "", // para quitar el contador de caracteres
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: BorderSide.none,
+                          ),
+                        ),
+                        // atributo del TextFormField
+                        validator: (String? value){
+                          if(value!.isEmpty){
+                            return "El campo no puede estar vación";
+                          }
+                          return null;
+                        },
                       ),
                     ),
                   ],
@@ -160,7 +173,11 @@ class _RegisterPageState extends State<RegisterPage> {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  if(_keyForm.currentState!.validate()){
+
+                  }
+                },
                 child: Text(
                   "Agregar Carnet",
                   style: TextStyle(
