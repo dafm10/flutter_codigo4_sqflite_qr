@@ -90,14 +90,12 @@ class _ListCardPageState extends State<ListCardPage> {
                                   )
                                 : Container(
                                     width: double.infinity,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.8,
-                                    color: Colors.redAccent,
+                                    height: MediaQuery.of(context).size.height * 0.8,
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Image.asset(
+                                        SvgPicture.asset(
                                           "assets/icons/bx-box.svg",
                                           height: MediaQuery.of(context).size.height * 0.15,
                                           color: COLOR_FONT_PRIMARY,
