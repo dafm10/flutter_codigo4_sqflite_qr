@@ -48,45 +48,53 @@ class _ListCardPageState extends State<ListCardPage> {
               builder: (BuildContext context, AsyncSnapshot snap) {
                 if (snap.hasData) {
                   List<CarnetModel> carnetList = snap.data;
-                  return SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Mis Carnets Registrados",
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w700,
-                              color: COLOR_FONT_PRIMARY,
-                            ),
-                          ),
-                          RefreshIndicator(
-                            onRefresh: () async {
-                              setState(() {
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      setState(() {
 
-                              });
-                            },
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: BouncingScrollPhysics(
-                                parent: AlwaysScrollableScrollPhysics(),
+                      });
+                    },
+                    child: SingleChildScrollView(
+                      physics: BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics(),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Mis Carnets Registrados",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w700,
+                                color: COLOR_FONT_PRIMARY,
                               ),
-                              itemCount: carnetList.length,
-                              itemBuilder:
-                                  (BuildContext context, int index) {
-                                return ItemCarnetWidget(
+                            ),
+                            carnetList.length > 0 ? RefreshIndicator(
+                              onRefresh: () async {
+                                setState(() {
+
+                                });
+                              },
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: carnetList.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return ItemCarnetWidget(
                                     fullName: carnetList[index].fullName,
                                     dni: carnetList[index].dni,
-                                    url: carnetList[index].url);
-                              },
+                                    url: carnetList[index].url,
+                                  );
+                                },
+                              ),
+                            ) : Center(child: Text("Aún no hay carnets registrados",),),
+                            const SizedBox(
+                              height: 60.0,
                             ),
-                          ),
-                          const SizedBox(
-                            height: 60.0,
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   );
