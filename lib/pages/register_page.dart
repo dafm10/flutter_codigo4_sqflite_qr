@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_codigo4_sqflite_qr/db/db_admin.dart';
+import 'package:flutter_codigo4_sqflite_qr/mdels/carnet_model.dart';
 import 'package:flutter_codigo4_sqflite_qr/ui/general/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+  String url;
+
+  RegisterPage({required this.url});
 
   @override
   _RegisterPageState createState() => _RegisterPageState();
@@ -13,6 +17,8 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   // para identificar de forma global el formulario usado dentro del padding
   final _keyForm = GlobalKey<FormState>();
+  TextEditingController _fullNameController = TextEditingController();
+  TextEditingController _dniController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       // cambiamos los TextField por TextFormField
                       child: TextFormField(
+                        controller: _fullNameController,
                         decoration: InputDecoration(
                           hintText: "Nombre Completo",
                           hintStyle: TextStyle(
@@ -105,7 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         // atributo del TextFormField
                         validator: (String? value) {
-                          if(value!.isEmpty){
+                          if (value!.isEmpty) {
                             return "El campo no deb estar vacío";
                           }
                           return null;
@@ -137,6 +144,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ],
                       ),
                       child: TextFormField(
+                        controller: _dniController,
                         // para habilitar solo teclado de numeros
                         keyboardType: TextInputType.number,
                         maxLength: 8, // el maximo de caracteres
@@ -152,7 +160,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           filled: true,
                           fillColor: Colors.white,
-                          counterText: "", // para quitar el contador de caracteres
+                          counterText:
+                              "", // para quitar el contador de caracteres
                           errorStyle: TextStyle(
                             fontSize: 15.0,
                             color: Color(0xffF45E29),
@@ -175,11 +184,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                         // atributo del TextFormField
-                        validator: (String? value){
-                          if(value!.isEmpty){
+                        validator: (String? value) {
+                          if (value!.isEmpty) {
                             return "El campo no puede estar vación";
                           }
-                          if(value.length < 8){
+                          if (value.length < 8) {
                             return "Ingrese como mínimo 8 caracteres";
                           }
                           return null;
@@ -206,8 +215,29 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 onPressed: () {
                   // se ejecuta esto siempre y cuando la validación sea correcta
-                  if(_keyForm.currentState!.validate()){
-
+                  if (_keyForm.currentState!.validate()) {
+                    CarnetModel carnet = CarnetModel(
+                      fullName: _fullNameController.text,
+                      dni: _dniController.text,
+                      url: widget.url,
+                    );
+                    DBAdmin.db.insertCarnet(carnet).then((value) {
+                      if (value >= 0) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            backgroundColor: Colors.deepPurple,
+                            elevation: 5,
+                            behavior: SnackBarBehavior.floating,
+                            content: Text(
+                              "Carnet Agregado con éxito",
+                            ),
+                          ),
+                        );
+                      }
+                    });
                   }
                 },
                 child: Text(

@@ -18,7 +18,8 @@ class _ScannerQRPageState extends State<ScannerQRPage> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   String? urlCarnet = "";
   bool isUrl = false;
-  String pattern = r'(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?';
+  String pattern =
+      r'(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?';
 
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
@@ -53,7 +54,6 @@ class _ScannerQRPageState extends State<ScannerQRPage> {
   }
 
   void _onQRViewCreated(QRViewController controller) {
-
     RegExp regExp = RegExp(pattern);
     setState(() {
       this.controller = controller;
@@ -149,9 +149,21 @@ class _ScannerQRPageState extends State<ScannerQRPage> {
                         ),
                       ),
                       // si isUrl es true, se habilita el boton
-                      onPressed: isUrl ? () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=> RegisterPage()));
-                      } : null,
+                      onPressed: true
+                          ? () {
+                              // para cerrar la camara y evitar que siga consumiendo recursos
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RegisterPage(
+                                    url:
+                                        "https://satechi.net/collections/stands",
+                                  ),
+                                ),
+                              );
+                            }
+                          : null,
                       child: const Text(
                         "Registrar carnet",
                         style: TextStyle(
