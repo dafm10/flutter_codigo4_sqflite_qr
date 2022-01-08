@@ -62,18 +62,30 @@ class _ListCardPageState extends State<ListCardPage> {
                               color: COLOR_FONT_PRIMARY,
                             ),
                           ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: ScrollPhysics(),
-                            itemCount: carnetList.length,
-                            itemBuilder:
-                                (BuildContext context, int index) {
-                              return ItemCarnetWidget(
-                                  fullName: carnetList[index].fullName,
-                                  dni: carnetList[index].dni,
-                                  url: carnetList[index].url);
+                          RefreshIndicator(
+                            onRefresh: () async {
+                              setState(() {
+
+                              });
                             },
-                          )
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              physics: BouncingScrollPhysics(
+                                parent: AlwaysScrollableScrollPhysics(),
+                              ),
+                              itemCount: carnetList.length,
+                              itemBuilder:
+                                  (BuildContext context, int index) {
+                                return ItemCarnetWidget(
+                                    fullName: carnetList[index].fullName,
+                                    dni: carnetList[index].dni,
+                                    url: carnetList[index].url);
+                              },
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 60.0,
+                          ),
                         ],
                       ),
                     ),
@@ -90,9 +102,6 @@ class _ListCardPageState extends State<ListCardPage> {
                   ),
                 );
               }),
-          const SizedBox(
-            height: 100.0,
-          ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
