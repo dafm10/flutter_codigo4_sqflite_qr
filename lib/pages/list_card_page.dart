@@ -50,12 +50,10 @@ class _ListCardPageState extends State<ListCardPage> {
                   List<CarnetModel> carnetList = snap.data;
                   return RefreshIndicator(
                     onRefresh: () async {
-                      setState(() {
-
-                      });
+                      setState(() {});
                     },
                     child: SingleChildScrollView(
-                      physics: BouncingScrollPhysics(
+                      physics: const BouncingScrollPhysics(
                         parent: AlwaysScrollableScrollPhysics(),
                       ),
                       child: Padding(
@@ -64,7 +62,7 @@ class _ListCardPageState extends State<ListCardPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               "Mis Carnets Registrados",
                               style: TextStyle(
                                 fontSize: 16.0,
@@ -72,24 +70,47 @@ class _ListCardPageState extends State<ListCardPage> {
                                 color: COLOR_FONT_PRIMARY,
                               ),
                             ),
-                            carnetList.length > 0 ? RefreshIndicator(
-                              onRefresh: () async {
-                                setState(() {
-
-                                });
-                              },
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: carnetList.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return ItemCarnetWidget(
-                                    fullName: carnetList[index].fullName,
-                                    dni: carnetList[index].dni,
-                                    url: carnetList[index].url,
-                                  );
-                                },
-                              ),
-                            ) : Center(child: Text("Aún no hay carnets registrados",),),
+                            carnetList.length > 0
+                                ? RefreshIndicator(
+                                    onRefresh: () async {
+                                      setState(() {});
+                                    },
+                                    child: ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: carnetList.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return ItemCarnetWidget(
+                                          fullName: carnetList[index].fullName,
+                                          dni: carnetList[index].dni,
+                                          url: carnetList[index].url,
+                                        );
+                                      },
+                                    ),
+                                  )
+                                : Container(
+                                    width: double.infinity,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.8,
+                                    color: Colors.redAccent,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          "assets/icons/bx-box.svg",
+                                          height: MediaQuery.of(context).size.height * 0.15,
+                                          color: COLOR_FONT_PRIMARY,
+                                        ),
+                                        SizedBox(
+                                          height: 30.0,
+                                        ),
+                                        Text(
+                                          "Aún no hay carnets registrados",
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                             const SizedBox(
                               height: 60.0,
                             ),
@@ -102,7 +123,7 @@ class _ListCardPageState extends State<ListCardPage> {
                 return Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       CircularProgressIndicator(
                         color: Color(0xffF45E29),
                       ),
@@ -127,8 +148,8 @@ class _ListCardPageState extends State<ListCardPage> {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => ScannerQRPage()));
                 },
-                icon: Icon(Icons.qr_code_scanner),
-                label: Text(
+                icon: const Icon(Icons.qr_code_scanner),
+                label: const Text(
                   "Escanear QR",
                   style: TextStyle(
                     fontSize: 16.0,
