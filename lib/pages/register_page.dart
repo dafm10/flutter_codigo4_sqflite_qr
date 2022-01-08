@@ -223,12 +223,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     );
                     DBAdmin.db.insertCarnet(carnet).then((value) {
                       if (value >= 0) {
+                        Navigator.pop(context);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
-                            backgroundColor: Colors.deepPurple,
+                            backgroundColor: Color(0xff02c39a),
                             elevation: 5,
                             behavior: SnackBarBehavior.floating,
                             content: Text(

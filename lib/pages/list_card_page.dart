@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo4_sqflite_qr/db/db_admin.dart';
+import 'package:flutter_codigo4_sqflite_qr/mdels/carnet_model.dart';
 import 'package:flutter_codigo4_sqflite_qr/pages/scanner_qr_page.dart';
 import 'package:flutter_codigo4_sqflite_qr/ui/general/colors.dart';
+import 'package:flutter_codigo4_sqflite_qr/ui/widgets/item_carnet_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ListCardPage extends StatefulWidget {
@@ -40,132 +43,55 @@ class _ListCardPageState extends State<ListCardPage> {
       ),
       body: Stack(
         children: [
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Mis Carnets Registrados",
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w700,
-                      color: COLOR_FONT_PRIMARY,
+          FutureBuilder(
+              future: DBAdmin.db.getCarnetList(),
+              builder: (BuildContext context, AsyncSnapshot snap) {
+                if (snap.hasData) {
+                  List<CarnetModel> carnetList = snap.data;
+                  return SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Mis Carnets Registrados",
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w700,
+                              color: COLOR_FONT_PRIMARY,
+                            ),
+                          ),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: ScrollPhysics(),
+                            itemCount: carnetList.length,
+                            itemBuilder:
+                                (BuildContext context, int index) {
+                              return ItemCarnetWidget(
+                                  fullName: carnetList[index].fullName,
+                                  dni: carnetList[index].dni,
+                                  url: carnetList[index].url);
+                            },
+                          )
+                        ],
+                      ),
                     ),
+                  );
+                }
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(
+                        color: Color(0xffF45E29),
+                      ),
+                    ],
                   ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: ScrollPhysics(),
-                    itemCount: 3,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        margin: const EdgeInsets.symmetric(vertical: 12.0),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 12.0, horizontal: 12.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.0),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.white,
-                              offset: Offset(-4, -4),
-                              blurRadius: 5.0,
-                            ),
-                            BoxShadow(
-                              color: Colors.black12.withOpacity(0.04),
-                              offset: Offset(4, 4),
-                              blurRadius: 12.0,
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Nombre:",
-                                    style: TextStyle(
-                                      fontSize: 12.0,
-                                      color:
-                                          COLOR_FONT_PRIMARY.withOpacity(0.6),
-                                    ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        "assets/icons/bx-user.svg",
-                                        color: COLOR_FONT_PRIMARY.withOpacity(0.72),
-                                        height: 16.0,
-                                      ),
-                                      const SizedBox(
-                                        width: 6.0,
-                                      ),
-                                      Text(
-                                        "Pedro David Fernández Morales",
-                                        style: TextStyle(
-                                          color: COLOR_FONT_PRIMARY
-                                              .withOpacity(0.9),
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 15.0,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 8.0,
-                                  ),
-                                  Text(
-                                    "Número de DNI:",
-                                    style: TextStyle(
-                                      fontSize: 12.0,
-                                      color:
-                                          COLOR_FONT_PRIMARY.withOpacity(0.6),
-                                    ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        "assets/icons/bx-card.svg",
-                                        color: COLOR_FONT_PRIMARY.withOpacity(0.72),
-                                        height: 12.0,
-                                      ),
-                                      const SizedBox(
-                                        width: 6.0,
-                                      ),
-                                      Text(
-                                        "44888982",
-                                        style: TextStyle(
-                                          color: COLOR_FONT_PRIMARY.withOpacity(0.8),
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 15.0,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: SvgPicture.asset(
-                                "assets/icons/bx-link.svg",
-                                color: COLOR_FONT_PRIMARY,
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(
-                    height: 100.0,
-                  ),
-                ],
-              ),
-            ),
+                );
+              }),
+          const SizedBox(
+            height: 100.0,
           ),
           Align(
             alignment: Alignment.bottomCenter,
@@ -181,7 +107,8 @@ class _ListCardPageState extends State<ListCardPage> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ScannerQRPage()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ScannerQRPage()));
                 },
                 icon: Icon(Icons.qr_code_scanner),
                 label: Text(
