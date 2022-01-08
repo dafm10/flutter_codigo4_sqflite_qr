@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_codigo4_sqflite_qr/ui/general/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ItemCarnetWidget extends StatelessWidget {
   String fullName;
@@ -98,7 +99,9 @@ class ItemCarnetWidget extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              await launch(url);
+            },
             icon: SvgPicture.asset(
               "assets/icons/bx-link.svg",
               color: COLOR_FONT_PRIMARY,
