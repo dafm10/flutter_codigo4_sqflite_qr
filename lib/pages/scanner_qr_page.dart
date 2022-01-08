@@ -149,7 +149,7 @@ class _ScannerQRPageState extends State<ScannerQRPage> {
                         ),
                       ),
                       // si isUrl es true, se habilita el boton
-                      onPressed: true
+                      onPressed: isUrl
                           ? () {
                               // para cerrar la camara y evitar que siga consumiendo recursos
                               Navigator.pop(context);
@@ -157,8 +157,7 @@ class _ScannerQRPageState extends State<ScannerQRPage> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => RegisterPage(
-                                    url:
-                                        "https://satechi.net/collections/stands",
+                                    url: urlCarnet!,
                                   ),
                                 ),
                               );
