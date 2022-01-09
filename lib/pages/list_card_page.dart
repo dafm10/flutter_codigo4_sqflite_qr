@@ -15,6 +15,12 @@ class ListCardPage extends StatefulWidget {
 
 class _ListCardPageState extends State<ListCardPage> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -81,23 +87,30 @@ class _ListCardPageState extends State<ListCardPage> {
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return ItemCarnetWidget(
+                                          id: carnetList[index].id!,
                                           fullName: carnetList[index].fullName,
                                           dni: carnetList[index].dni,
                                           url: carnetList[index].url,
+                                          onUpdate: () {},
+                                          onDeleted: () {},
                                         );
                                       },
                                     ),
                                   )
                                 : Container(
                                     width: double.infinity,
-                                    height: MediaQuery.of(context).size.height * 0.8,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.8,
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
                                         SvgPicture.asset(
                                           "assets/icons/bx-box.svg",
-                                          height: MediaQuery.of(context).size.height * 0.15,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.15,
                                           color: COLOR_FONT_PRIMARY,
                                         ),
                                         SizedBox(

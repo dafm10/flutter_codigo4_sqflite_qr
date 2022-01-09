@@ -11,7 +11,7 @@
     </queries>
 
    <application
-        android:label="flutter_codigo4_sqflite_qr"
+        android:label="VacunApp"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

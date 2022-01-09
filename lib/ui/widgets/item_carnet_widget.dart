@@ -4,12 +4,20 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ItemCarnetWidget extends StatelessWidget {
+  int id;
   String fullName;
   String dni;
   String url;
+  Function onDeleted;
+  Function onUpdate;
 
   ItemCarnetWidget(
-      {required this.fullName, required this.dni, required this.url});
+      {required this.id,
+      required this.fullName,
+      required this.dni,
+      required this.url,
+      required this.onUpdate,
+      required this.onDeleted});
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +112,13 @@ class ItemCarnetWidget extends StatelessWidget {
             },
             icon: SvgPicture.asset(
               "assets/icons/bx-link.svg",
+              color: COLOR_FONT_PRIMARY,
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: SvgPicture.asset(
+              "assets/icons/trash.svg",
               color: COLOR_FONT_PRIMARY,
             ),
           ),

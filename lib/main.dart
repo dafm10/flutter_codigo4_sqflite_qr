@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      title: "VacunApp",
       theme: ThemeData(
         textTheme: GoogleFonts.manropeTextTheme(),
       ),

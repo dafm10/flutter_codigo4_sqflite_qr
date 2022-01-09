@@ -58,4 +58,11 @@ class DBAdmin {
     int res = await db!.delete("CARNET", where: "id = $id");
     return res;
   }
+
+  Future<int>updateCarnet(CarnetModel carnet) async {
+    final db = await getDatabase();
+    int res = await db!.update("BOOK", carnet.toJson(), where: "id = ${carnet.id}");
+    return res;
+  }
+
 }
