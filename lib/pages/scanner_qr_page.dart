@@ -54,7 +54,9 @@ class _ScannerQRPageState extends State<ScannerQRPage> {
   }
 
   void _onQRViewCreated(QRViewController controller) {
+
     RegExp regExp = RegExp(pattern);
+
     setState(() {
       this.controller = controller;
     });
@@ -143,18 +145,15 @@ class _ScannerQRPageState extends State<ScannerQRPage> {
                     height: 54.0,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xffF45E29),
+                        primary: const Color(0xffF45E29),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
                       // si isUrl es true, se habilita el boton
                       onPressed: isUrl
-                          ? () {
-                              // para cerrar la camara y evitar que siga consumiendo recursos
-                              Navigator.pop(context);
-                              Navigator.push(
-                                context,
+                          ? () { // para cerrar la camara y evitar que siga consumiendo recursos
+                              Navigator.pop(context);Navigator.push(context,
                                 MaterialPageRoute(
                                   builder: (context) => RegisterPage(
                                     url: urlCarnet!,
