@@ -91,8 +91,13 @@ class _ListCardPageState extends State<ListCardPage> {
                                           fullName: carnetList[index].fullName,
                                           dni: carnetList[index].dni,
                                           url: carnetList[index].url,
-                                          onUpdate: () {},
-                                          onDeleted: () {},
+                                          onUpdate: () {
+                                          },
+                                          onDeleted: () {
+                                            setState(() {
+
+                                            });
+                                          },
                                         );
                                       },
                                     ),
